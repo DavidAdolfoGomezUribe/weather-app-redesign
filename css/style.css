@@ -1,5 +1,10 @@
 @import url(variables.css);
 
+:root{
+
+    --time: 1s;
+}
+
 *{margin: 0; padding: 0; 
     /* outline: 1px solid tomato; */
 }
@@ -23,6 +28,7 @@ transition: none;
 /* ancho 412px */
 /*  4.12 */
 
+
 .headercontainer {
     color: white;
     position: fixed;
@@ -36,7 +42,7 @@ transition: none;
     border-bottom-left-radius: 8vw;
     border-bottom-right-radius: 8vw;
     
-    transition: all 2s ease-in-out;
+    transition: all var(--time) ease-in-out;
     
     .regioncontainer{
         position: fixed;
@@ -49,6 +55,8 @@ transition: none;
         justify-content: space-between;
         align-items: center;
         input{
+            
+            font-family: "Product\ Sans\ Regular.ttf";
             margin-left: 5.58vw ;
             font-size: 5.34vw;
             border: none;
@@ -67,19 +75,23 @@ transition: none;
     }
 
     .tempcontainer{
+        font-family: "Product\ Sans\ Regular.ttf";
         position: fixed;
         left: 5.58vw;
         top:33.73vw;
         white-space: nowrap;
         font-size: 27.18vw;
+        transition: all var(--time) ease-in-out;
         
     }
 
     .feelslikecontainer{
+        font-family: "Product\ Sans\ Regular.ttf";
         position: fixed;
         left: 24.27vw;
         top: 49.75vw;
         font-size: 4.36vw;
+        transition: all var(--time) ease-in-out;
 
     }
     .imgweathercontainer{
@@ -90,32 +102,40 @@ transition: none;
         flex-direction: column;
         gap: 3.39vw;
         align-items: center;
+        transition: all var(--time) ease-in-out;
         img{
             
             width: 25.97vw;
-            height: 25.97;
+            height: 25.97vw;
+            transition: all var(--time) ease-in-out;
         }
 
         p{
+            font-family: "Product\ Sans\ Regular.ttf";
             font-size: 5.33vw;
+            transition: all var(--time) ease-in-out;
         }
     }
 
     .datecontainer{
+        font-family: "Product\ Sans\ Regular.ttf";
         position: fixed;
         top: 76.69vw;
         left: 5.58vw;
-        font-size: 4,36vw;
+        font-size: 4.36vw;
+        transition: all var(--time) ease-in-out;
         
     }
 
     .daynightcontainer{
+        font-family: "font/Product\ Sans\ Bold.ttf";
         position: fixed;
         top: 71.84vw;
         left: 76.69vw;
         font-size: 4.36vw;
         display: flex;
         flex-direction: column;
+        transition: all var(--time) ease-in-out;
 
     }
 }
