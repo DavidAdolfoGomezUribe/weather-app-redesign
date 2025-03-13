@@ -42,7 +42,7 @@ transition: none;
     border-bottom-left-radius: 8vw;
     border-bottom-right-radius: 8vw;
     
-    transition: all var(--time) ease-in-out;
+    transition: height var(--time) ease-in-out,background-color var(--time) ease-in-out;
     
     .regioncontainer{
         position: fixed;
@@ -63,6 +63,7 @@ transition: none;
             outline: none;
             background: transparent;
             color: white;
+            transition: all var(--time) ease-in-out;
         }
 
         
@@ -76,6 +77,7 @@ transition: none;
 
     .tempcontainer{
         font-family: "Product\ Sans\ Regular.ttf";
+        letter-spacing: -3vw;
         position: fixed;
         left: 5.58vw;
         top:33.73vw;
@@ -101,19 +103,22 @@ transition: none;
         display: flex;
         flex-direction: column;
         gap: 3.39vw;
+        height: 36.16vw;
         align-items: center;
         transition: all var(--time) ease-in-out;
+        text-align: center;
         img{
             
             width: 25.97vw;
             height: 25.97vw;
             transition: all var(--time) ease-in-out;
+            object-fit: scale-down;
         }
 
         p{
             font-family: "Product\ Sans\ Regular.ttf";
             font-size: 5.33vw;
-            transition: all var(--time) ease-in-out;
+            transition: all 0 ease-in-out;
         }
     }
 
@@ -123,7 +128,7 @@ transition: none;
         top: 76.69vw;
         left: 5.58vw;
         font-size: 4.36vw;
-        transition: all var(--time) ease-in-out;
+        transition: all 0s ease-in-out;
         
     }
 
