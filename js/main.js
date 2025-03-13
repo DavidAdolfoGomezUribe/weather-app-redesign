@@ -122,6 +122,8 @@ document.addEventListener("DOMContentLoaded",async function() {
         const apiKey = "key=3147a7f586c64f2abba154614251003"
         const baseUrlRequest = "http://api.weatherapi.com/v1"
         const currentJson = "current.json?"
+        const forecastJson = "forecast.json?"
+        const currentDay = "days=1"
         
         async function wheatherApi() {
             
@@ -152,7 +154,23 @@ document.addEventListener("DOMContentLoaded",async function() {
                 let datatime = `${countryobject.location.localtime}`
 
                 datecontainer.innerHTML = `${formatLocalTime(datatime)}`;
+
+                // http://api.weatherapi.com/v1/forecast.json?key=3147a7f586c64f2abba154614251003&q=bucaramanga&days=1&aqi=no&alerts=no
                 
+                //para sacar la temperatura del dia y la noche 
+                response = await fetch(` ${baseUrlRequest}/${forecastJson}${apiKey}&q=${country}&${currentDay}`)
+                countryobject = await response.json();
+
+                daynightcontainer.innerHTML =
+                `<p>Day ${countryobject.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
+                 <p>Night ${countryobject.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`
+
+
+                console.log(countryobject.forecast.forecastday[0].day.maxtemp_c)
+                console.log(countryobject.forecast.forecastday[0].day.mintemp_c)
+
+
+
                 
                 
                 
