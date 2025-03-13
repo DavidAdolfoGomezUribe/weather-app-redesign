@@ -42,7 +42,7 @@ transition: none;
     border-bottom-left-radius: 8vw;
     border-bottom-right-radius: 8vw;
     
-    transition: height var(--time) ease-in-out,background-color var(--time) ease-in-out;
+    transition: height var(--time) ease-in-out,background var(--time) ease-in-out;
     
     .regioncontainer{
         position: fixed;

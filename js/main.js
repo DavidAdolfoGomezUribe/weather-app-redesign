@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded",async function() {
             } else{ //Pa poder cambiar las propiedades cuando se sube
                 
                 headercontainer.style.background = " url(../storage/img/background.png)";
-                headercontainer.style.backgroundColor = "rgba(226, 211, 250, 1)";
+                
                 headercontainer.style.backgroundRepeat = "no-repeat";
                 headercontainer.style.backgroundPositionY ="100% " ;
                 headercontainer.style.backgroundSize = "cover";
@@ -120,69 +120,121 @@ document.addEventListener("DOMContentLoaded",async function() {
 
         //variables de la api
         const apiKey = "key=3147a7f586c64f2abba154614251003"
-        const baseUrlRequest = "http://api.weatherapi.com/v1"
+        const baseUrlRequest = "https://api.weatherapi.com/v1"
         const currentJson = "current.json?"
         const forecastJson = "forecast.json?"
         const currentDay = "days=1"
-        
+
+
         async function wheatherApi() {
             
-            regioncontainer_input.addEventListener("input",async function (e) {
-                
-                let country = e.target.value;
-                
-                
-                let response = await fetch(` ${baseUrlRequest}/${currentJson}${apiKey}&q=${country}`)
-                let countryobject = await response.json();
-
-                //añade la temperatura de la ciudad o sitio que se dijita en la barra de busqueda
-                tempcontainer.innerHTML = `<p>${countryobject.current.temp_c}<span>°</span></p>`
-                
-                feelslikecontainer.innerHTML = `<p>Feels like ${countryobject.current.feelslike_c}<span>°</span></p>`
-
-                imgweathercontainer.innerHTML = 
-                    `<img src="${countryobject.current.condition.icon}" > 
-                     <p>${countryobject.current.condition.text}</p>`
-
-
-
-                function formatLocalTime(localtime) {
-                    const date = new Date(localtime.replace(" ", "T")); // Convertir a formato válido de JS
-                    const options = { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false };
-                    return date.toLocaleString("en-US", options).replace("at", ",");
-                }
-                let datatime = `${countryobject.location.localtime}`
-
-                datecontainer.innerHTML = `${formatLocalTime(datatime)}`;
-
-                // http://api.weatherapi.com/v1/forecast.json?key=3147a7f586c64f2abba154614251003&q=bucaramanga&days=1&aqi=no&alerts=no
-                
-                //para sacar la temperatura del dia y la noche 
-                response = await fetch(` ${baseUrlRequest}/${forecastJson}${apiKey}&q=${country}&${currentDay}`)
-                countryobject = await response.json();
-
-                daynightcontainer.innerHTML =
-                `<p>Day ${countryobject.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
-                 <p>Night ${countryobject.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`
-
-
-                console.log(countryobject.forecast.forecastday[0].day.maxtemp_c)
-                console.log(countryobject.forecast.forecastday[0].day.mintemp_c)
-
-
-
-                
-                
-                
-                
-
-
-            })
-
             
+        // geolocalizacion
+        async function getLocation() {
+            return new Promise(function (success, reject) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    success({
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude
+                    });
+                }
+                ,                
+                function (error) {
+                    reject(error);
+                }
+                );
+            });
         }
 
-        wheatherApi();
+        //verificacion de lat y long en consola
+        // let coords = await getLocation()   
+        // console.log(coords) //esto devuelve un arreglo          
+        // let latidude  =  coords.lat
+        // let longitude = coords.lon
+        // console.log(latidude)
+        // console.log(longitude)
+
+
+    // Obtener y mostrar el clima
+    async function fetchWeatherData(query) {
+        try {
+
+            // Petición para datos actuales
+            let response = await fetch(`${baseUrlRequest}/${currentJson}${apiKey}&q=${query}`);
+            let data = await response.json();
+
+            
+
+            tempcontainer.innerHTML = `<p>${data.current.temp_c}<span>°</span></p>`;
+            feelslikecontainer.innerHTML = `<p>Feels like ${data.current.feelslike_c}<span>°</span></p>`;
+            imgweathercontainer.innerHTML = `<img src="${data.current.condition.icon}"><p>${data.current.condition.text}</p>`;
+
+            function formatLocalTime(localtime) {
+                const date = new Date(localtime.replace(" ", "T"));
+                const options = { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false };
+                return date.toLocaleString("en-US", options).replace("at", ",");
+            }
+
+            datecontainer.innerHTML = `${formatLocalTime(data.location.localtime)}`;
+
+            // Petición para obtener temperaturas del día y la noche
+            response = await fetch(`${baseUrlRequest}/${forecastJson}${apiKey}&q=${query}&${currentDay}`);
+            data = await response.json();
+
+            daynightcontainer.innerHTML =
+                `<p>Day ${data.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
+                 <p>Night ${data.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`;
+
+        } catch (error) {
+            console.error("Error obteniendo datos del clima:", error);
+        }
+    }
+
+    // Mostrar el clima inicial con geolocalización
+    
+    try {
+        
+        // //https://api.weatherapi.com/v1/current.json?key=3147a7f586c64f2abba154614251003&q=7.094272,-73.121792
+        
+        
+        async function geolocalitation() {
+            
+            //verificacion de lat y long en consola
+            let coords = await getLocation()   
+            // console.log(coords) //esto devuelve un arreglo          
+            let latidude  =  coords.lat
+            let longitude = coords.lon
+            // console.log(latidude)
+            // console.log(longitude)
+            
+            await fetchWeatherData(`${coords.lat},${coords.lon}`);
+            
+            let newResponse = await fetch(`${baseUrlRequest}/${forecastJson}${apiKey}&q=${latidude},${longitude}`);
+            let data = await newResponse.json();
+    
+            regioncontainer_input.value = data.location.name;
+            
+        }
+        
+        geolocalitation();
+        
+        
+   
+    } catch (error) {
+        console.error("No se pudo obtener la ubicación, intenta escribir una ciudad.");
+    }
+
+    // Escuchar cambios en el input de búsqueda
+    regioncontainer_input.addEventListener("input", async function (e) {
+        let city = e.target.value;
+        if (city.length > 2) { // Evitar llamadas innecesarias
+            await fetchWeatherData(city);
+        }
+    });
+}
+
+wheatherApi();
 
 
 
