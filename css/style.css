@@ -36,13 +36,17 @@ transition: none;
     width: 100vw;
     height: 87.37vw;
     background: url(../storage/img/background.png);
+    
     background-repeat: no-repeat;
     background-size: cover;
     background-position-y: 100%;
     border-bottom-left-radius: 8vw;
     border-bottom-right-radius: 8vw;
     
-    transition: height var(--time) ease-in-out,background var(--time) ease-in-out;
+    transition: height var(--time) ease-in-out, 
+            background var(--time) ease-in-out, 
+            border var(--time) ease-in-out, 
+            border-radius var(--time) ease-in-out;
     
     .regioncontainer{
         position: fixed;
@@ -55,7 +59,7 @@ transition: none;
         justify-content: space-between;
         align-items: center;
         input{
-            
+            width: inherit;
             font-family: "Product\ Sans\ Regular.ttf";
             margin-left: 5.58vw ;
             font-size: 5.34vw;
@@ -118,7 +122,8 @@ transition: none;
         p{
             font-family: "Product\ Sans\ Regular.ttf";
             font-size: 5.33vw;
-            transition: all 0 ease-in-out;
+            
+            
         }
     }
 
@@ -143,4 +148,70 @@ transition: none;
         transition: all var(--time) ease-in-out;
 
     }
+
+
+    .selectioncontaienr{
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        gap: 3.88vw;
+        top: 91.74vw;
+        
+        left: 3.88vw;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        width: 92.23vw;
+        height: 10.19vw;
+        transition: all var(--time) ease-in-out;
+        
+        p{
+            font-family: "Product\ Sans\ Regular.ttf";
+            height: 10.19vw;
+            width: 40.29vw;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            border-radius: 3.40vw;
+            background-color: white;
+            color: black;
+            font-size: 3.88vw;
+        }
+        
+        p:hover{
+            background-color: rgba(224, 182, 255, 1);
+        }
+
+
+    }
+}
+
+
+.maincontainer{
+    background-color: brown;
+    position: fixed;
+    top: 105.82vw;
+    left: 3.88vw;
+    width: 92.23vw;
+    height:100vw ;
+    transition: all var(--time) ease-in-out;
+    display: flex; flex-direction: column;
+    gap:3.88vw ;
+
+    .windrainpressureuvcontainer{
+        background-color: blue;
+        height: 10vw;
+        width: 92.23vw;
+    }
+
+    .hourlyforecast{
+        background-color: blue;
+        height: 10vw;
+        width: 10vw;
+    }
+
+    .dailyforecast{
+        
+    }
+
 }
