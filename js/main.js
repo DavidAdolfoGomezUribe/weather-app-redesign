@@ -18,12 +18,13 @@ document.addEventListener("DOMContentLoaded",async function() {
         
         //etiquetas html del main 
         const maincontainer = document.querySelector(".maincontainer")
+        
         const windrainpressureuvcontainer = document.querySelector(".windrainpressureuvcontainer")
+        const windcontainer = document.querySelector(".windcontainer")
+        const raincontainer = document.querySelector(".raincontainer")
         
-
+        
         headercontainer.style.backgroundColor = "rgba(226, 211, 250, 1)";
-        
-
         
         //diablo que dificil me la pusite , diablo.
         //funcion POWEROSA para efectos de transision
@@ -189,14 +190,16 @@ document.addEventListener("DOMContentLoaded",async function() {
         async function fetchWeatherData(query) {
         try {
 
-            // Petición para datos actuales
+            // Petición para datos actuales del header usando current
             let response = await fetch(`${baseUrlRequest}/${currentJson}${apiKey}&q=${query}`);
             let data = await response.json();
 
             
 
             tempcontainer.innerHTML = `<p>${data.current.temp_c}<span>°</span></p>`;
+            
             feelslikecontainer.innerHTML = `<p>Feels like ${data.current.feelslike_c}<span>°</span></p>`;
+            
             imgweathercontainer.innerHTML = `<img src="${data.current.condition.icon}">
                                                 <p>${data.current.condition.text}</p>`;
             
@@ -209,13 +212,70 @@ document.addEventListener("DOMContentLoaded",async function() {
 
             datecontainer.innerHTML = `${formatLocalTime(data.location.localtime)}`;
 
-            // Petición para obtener temperaturas del día y la noche
+            //peticiones para el main
+
+            windcontainer.innerHTML =`
+            <div>
+
+                <img src="storage/img/air.png" alt="">
+            
+                <div>
+                    <p>Wind speed</p>
+                    <p> ${data.current.wind_kph}km/h</p>
+
+                </div>
+        
+            </div>
+
+            <div>
+                <!-- velocidad con respecto a la hora anterior -->
+                <img src="" alt="">
+                <p>
+                    2 <span>km/h</span>
+                </p>
+            </div> `
+
+            
+
+
+
+
+
+
+
+            // Petición para obtener temperaturas del día y la noche usando forecast //pronostico de ahora en 24 horas
             response = await fetch(`${baseUrlRequest}/${forecastJson}${apiKey}&q=${query}&${currentDay}`);
             data = await response.json();
 
             daynightcontainer.innerHTML =
                 `<p>Day ${data.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
                  <p>Night ${data.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`;
+
+
+            raincontainer.innerHTML =`
+           
+                 <div>
+ 
+                     <img src="storage/img/rainy.png" alt="">
+                     
+                     <div>
+                         <p>Rain chance</p>
+                         <p>${data.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
+     
+                     </div>
+                 
+                 </div>
+ 
+                 <div>
+                     <!-- velocidad con respecto a la hora anterior -->
+                     <img src="" alt="">
+                     <p>
+                         0 <span></span>
+                     </p>
+                 </div>
+            
+             </div> `
+
 
         } catch (error) {
             console.error("Error obteniendo datos del clima:", error);
@@ -265,7 +325,7 @@ document.addEventListener("DOMContentLoaded",async function() {
     
     });
 
-
+    //Aqui empieza lo dificil
     const buttons = document.querySelectorAll(".selectioncontaienr button");
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", function() {
