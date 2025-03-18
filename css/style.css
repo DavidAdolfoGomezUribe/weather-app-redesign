@@ -27,7 +27,9 @@ transition: none;
 
 /* ancho 412px */
 /*  4.12 */
-
+body{
+    background-color: rgba(246, 237, 255, 1);
+}
 
 .headercontainer {
     color: white;
@@ -165,7 +167,7 @@ transition: none;
         height: 10.19vw;
         transition: all var(--time) ease-in-out;
         
-        p{
+        button{
             font-family: "Product\ Sans\ Regular.ttf";
             height: 10.19vw;
             width: 40.29vw;
@@ -176,9 +178,10 @@ transition: none;
             background-color: white;
             color: black;
             font-size: 3.88vw;
+            border: none;
         }
         
-        p:hover{
+        button:hover{
             background-color: rgba(224, 182, 255, 1);
         }
 
@@ -200,17 +203,73 @@ transition: none;
 
     .windrainpressureuvcontainer{
         background-color: blue;
-        height: 10vw;
+        height: 34.45vw;
         width: 92.23vw;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        row-gap: 2.91vw;
+        column-gap: 3.88vw;
+        justify-content: space-around;
         align-items: center;
     
         div{
-            height: 2vw;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            height: 15.77vw;
             width:44.17vw ;
             background-color: aqua;
+
+            >div:nth-child(1){
+                
+                width: 41.5vw;
+                height: 12.13vw;                
+                display: flex;
+                justify-content: space-between;
+                flex-direction: row;
+                gap: 1.94vw;
+                >img{
+                    width: 6.79vw;
+                    height: 6.79vw;
+                }
+                >div{
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                    
+                    width: 32.76vw;
+                    height: 12.13vw;
+                    background-color: tomato;
+                    
+                    >p:nth-child(1){
+                        font-size: 3.39vw;
+                        
+                    }
+
+                    >p:nth-child(2){
+                        font-size: 3.88vw;
+                    }
+                }
+            }
+
+            >div:nth-child(2){
+                height: 3.88vw;
+                width: 13.34vw;
+                position: absolute;
+                background-color: red;
+                display: flex;
+                flex-direction: row;
+                right: 0;
+                bottom: 0;
+
+            }
+
+
+        
         }
     }
 

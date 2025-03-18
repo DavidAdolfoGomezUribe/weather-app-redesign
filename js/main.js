@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded",async function() {
         const imgweathercontainer_p = document.querySelector(".imgweathercontainer p");
         const datecontainer = document.querySelector(".datecontainer")
         const daynightcontainer = document.querySelector(".daynightcontainer")
-        
         const selectioncontaienr = document.querySelector(".selectioncontaienr")
+        
         
         //etiquetas html del main 
         const maincontainer = document.querySelector(".maincontainer")
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded",async function() {
             
             
         // geolocalizacion
-        async function getLocation() {
+          async function getLocation() {
             return new Promise(function (success, reject) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded",async function() {
 
 
     // Obtener y mostrar el clima
-    async function fetchWeatherData(query) {
+        async function fetchWeatherData(query) {
         try {
 
             // Petición para datos actuales
@@ -262,10 +262,36 @@ document.addEventListener("DOMContentLoaded",async function() {
         if (city.length > 2) { // Evitar llamadas innecesarias
             await fetchWeatherData(city);
         }
+    
     });
+
+
+    const buttons = document.querySelectorAll(".selectioncontaienr button");
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function() {
+            var buttonText = this.textContent.trim();
+            if (buttonText === "Today") {
+                // Lógica para "Today"
+                maincontainer.style.backgroundColor = "blue"
+                console.log("Today clicked");
+                // Ejemplo: await fetchWeatherData(query);
+            } else if (buttonText === "Tomorrow") {
+                // Lógica para "Tomorrow"
+                maincontainer.style.backgroundColor = "brown"
+                console.log("Tomorrow clicked");
+                // TODO: Implementa la lógica para mostrar el pronóstico de mañana
+            } else if (buttonText === "10 days") {
+                // Lógica para "10 days"
+                console.log("10 days clicked");
+                // TODO: Implementa la lógica para mostrar el pronóstico de 10 días
+            }
+        }) }   
+
+
+
 }
 
-wheatherApi();
+        wheatherApi();
 
 
 
