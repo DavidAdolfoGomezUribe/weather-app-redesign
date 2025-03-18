@@ -22,8 +22,10 @@ document.addEventListener("DOMContentLoaded",async function() {
         const windrainpressureuvcontainer = document.querySelector(".windrainpressureuvcontainer")
         const windcontainer = document.querySelector(".windcontainer")
         const raincontainer = document.querySelector(".raincontainer")
-        
-        
+        const pressurecontainer = document.querySelector(".pressurecontainer")
+        const uvcontainer = document.querySelector(".uvcontainer")
+
+
         headercontainer.style.backgroundColor = "rgba(226, 211, 250, 1)";
         
         //diablo que dificil me la pusite , diablo.
@@ -235,8 +237,50 @@ document.addEventListener("DOMContentLoaded",async function() {
                 </p>
             </div> `
 
-            
+            pressurecontainer.innerHTML= `    
+            <div>
 
+            <img src="storage/img/pressre.svg" alt="">
+            
+            <div>
+                <p>Pressure</p>
+                <p>${data.current.pressure_mb}hpa</p>
+
+            </div>
+        
+            </div>
+
+            <div>
+                <!-- velocidad con respecto a la hora anterior -->
+                <img src="" alt="">
+                <p>
+                    0 <span>hpa</span>
+                </p>
+            </div>`
+
+
+            uvcontainer.innerHTML=`
+            <div>
+
+                <img src="storage/img/uv.svg" alt="">
+                
+                <div>
+                    <p>UV index</p>
+                    <p>${data.current.uv}</p>
+
+                </div>
+            
+            </div>
+
+            <div>
+                <!-- velocidad con respecto a la hora anterior -->
+                <img src="" alt="">
+                <p>
+                    0 
+                </p>
+            </div> `
+
+           
 
 
 
@@ -252,6 +296,7 @@ document.addEventListener("DOMContentLoaded",async function() {
                  <p>Night ${data.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`;
 
 
+            //peticiin para el main     
             raincontainer.innerHTML =`
            
                  <div>
@@ -270,11 +315,12 @@ document.addEventListener("DOMContentLoaded",async function() {
                      <!-- velocidad con respecto a la hora anterior -->
                      <img src="" alt="">
                      <p>
-                         0 <span></span>
+                         0 <span>%</span>
                      </p>
                  </div>
             
              </div> `
+
 
 
         } catch (error) {
@@ -346,10 +392,7 @@ document.addEventListener("DOMContentLoaded",async function() {
                 // TODO: Implementa la lógica para mostrar el pronóstico de 10 días
             }
         }) }   
-
-
-
-}
+    }
 
         wheatherApi();
 

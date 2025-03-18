@@ -195,7 +195,7 @@ body{
 
 
 .maincontainer{
-    background-color: brown;
+    background-color: rgba(250, 238, 174, 0.527);
     position: fixed;
     top: 105.82vw;
     left: 3.88vw;
@@ -206,7 +206,6 @@ body{
     gap:3.88vw ;
 
     .windrainpressureuvcontainer{
-        background-color: blue;
         height: 34.45vw;
         width: 92.23vw;
         display: flex;
@@ -215,8 +214,9 @@ body{
         column-gap: 3.88vw;
         justify-content: space-around;
         align-items: center;
-    
-        div{
+        
+        >div{
+            border-radius: 3.88vw;
             position: relative;
             display: flex;
             flex-direction: row;
@@ -224,14 +224,14 @@ body{
             align-items: center;
             height: 15.77vw;
             width:44.17vw ;
-            background-color: aqua;
+            background-color: rgba(208, 188, 255, 0.30);
             
             >div:nth-child(1){
-                
                 width: 41.5vw;
                 height: 12.13vw;                
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
                 flex-direction: row;
                 gap: 1.94vw;
                 >img{
@@ -240,6 +240,7 @@ body{
                 }
                 >div{
                     
+                    border-radius: 0;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
@@ -247,7 +248,7 @@ body{
                     
                     width: 32.76vw;
                     height: 12.13vw;
-                    background-color: tomato;
+                    
                     
                     >p:nth-child(1){
                         font-size: 3.39vw;
@@ -263,14 +264,16 @@ body{
             }
             
             >div:nth-child(2){
+                border-radius: 0;
                 height: 3.88vw;
                 width: 13.34vw;
                 position: absolute;
-                background-color: red;
+                
                 display: flex;
                 flex-direction: row;
+                justify-content: flex-start;
                 right: 0;
-                bottom: 0;
+                bottom: 1.45vw;
 
             }
 
