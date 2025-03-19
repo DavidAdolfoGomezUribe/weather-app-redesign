@@ -32,7 +32,8 @@ document.addEventListener("DOMContentLoaded",async function() {
         //funcion POWEROSA para efectos de transision
      
         let lastScrollTop = 0;
-    
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
         window.addEventListener("scroll",function() {
             
             let scrollTop  = window.scrollY || document.documentElement.scrollTop;
@@ -79,18 +80,24 @@ document.addEventListener("DOMContentLoaded",async function() {
                     
 
                 //estilos de la fecha actual
-                datecontainer.style.display = "none";
+                //datecontainer.style.display = "none";
+                datecontainer.style.top = "23vw"
+                datecontainer.style.color = "transparent"
+                
+                
                 
                 //estilos del contenedor temperatura diurna nocturna
-                daynightcontainer.style.display = "none";
-
+                // daynightcontainer.style.display = "none";
+                daynightcontainer.style.top = "23vw"
+                daynightcontainer.style.color = "transparent"
+                
 
                 //estilos del selectioncontaienr 
                 
-                selectioncontaienr.style.top = "29.36vw"
+                selectioncontaienr.style.top = "29.36vw";
 
                 //estilos para el main
-                maincontainer.style.top = "46.60vw"
+                maincontainer.style.top = "46.60vw";
                 
                 
 
@@ -133,9 +140,14 @@ document.addEventListener("DOMContentLoaded",async function() {
                     
 
                 datecontainer.style.display = "block"
-               
+                datecontainer.style.top = "76.69vw"
+                datecontainer.style.color = "white"
+                
+                
                 daynightcontainer.style.display = "block";
-
+                daynightcontainer.style.top = "71.84vw"
+                daynightcontainer.style.color = "white"
+                
                 selectioncontaienr.style.top = "91.74vw"
                 
                 //main

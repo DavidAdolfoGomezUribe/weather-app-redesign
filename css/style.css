@@ -31,8 +31,10 @@ transition: none;
 /* ancho 412px */
 /*  4.12 */
 body{
-    
+    overflow-y: scroll;
+    scroll-behavior: smooth;
     background-color: light-dark(rgba(246, 237, 255, 1),#252525);
+    flex-shrink: 0;
 }
 
 .headercontainer {
@@ -139,7 +141,7 @@ body{
         top: 76.69vw;
         left: 5.58vw;
         font-size: 4.36vw;
-        transition: all 0s ease-in-out;
+        transition: all var(--time) ease-in-out;
         
     }
 
@@ -147,11 +149,13 @@ body{
         font-family: "font/Product\ Sans\ Bold.ttf";
         position: fixed;
         top: 71.84vw;
-        left: 76.69vw;
+        left: 74.69vw;
         font-size: 4.36vw;
         display: flex;
         flex-direction: column;
         transition: all var(--time) ease-in-out;
+        width: 22vw;
+        
 
     }
 
@@ -196,14 +200,17 @@ body{
 
 .maincontainer{
     background-color: rgba(250, 238, 174, 0.527);
-    position: fixed;
+    position:relative;
     top: 105.82vw;
     left: 3.88vw;
     width: 92.23vw;
-    height:100vw ;
+    height: 1000vw ;
+    flex-shrink: 0;
     transition: all var(--time) ease-in-out;
     display: flex; flex-direction: column;
     gap:3.88vw ;
+    z-index: -1;
+    transition: all 1.5s ease-in-out;
 
     .windrainpressureuvcontainer{
         height: 34.45vw;
@@ -284,11 +291,12 @@ body{
 
     .hourlyforecast{
         background-color: blue;
-        height: 10vw;
-        width: 10vw;
+        width: 92.23vw;
+        height: 36.40vw;
     }
 
     .dailyforecast{
+
         
     }
 
