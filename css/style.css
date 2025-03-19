@@ -40,6 +40,7 @@ body{
 .headercontainer {
     color: white;
     position: fixed;
+    z-index: 2;
     top: 0;
     width: 100vw;
     height: 87.37vw;
@@ -209,7 +210,7 @@ body{
     transition: all var(--time) ease-in-out;
     display: flex; flex-direction: column;
     gap:3.88vw ;
-    z-index: -1;
+    z-index: 1;
     transition: all 1.5s ease-in-out;
 
     .windrainpressureuvcontainer{
@@ -290,12 +291,62 @@ body{
     }
 
     .hourlyforecast{
-        background-color: blue;
+        color: black;
+        position: relative;
         width: 92.23vw;
         height: 36.40vw;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(208, 188, 255, 0.30);
+        border-radius: 3.88vw;
+        
+        >div:nth-child(1){
+            top: 2.91vw;
+            left: 12.6vw;
+            position: absolute;
+            display: flex;
+            flex-direction: row;
+            
+
+        }
+
+        >div:nth-child(2){
+            position: absolute;
+            
+            display: flex;
+            flex-direction: row;
+            gap: 8vw;
+            height: 19.51vw;
+            width: 82vw;
+            flex-shrink: 0;
+            overflow-x: scroll;
+            bottom: 3.30vw;
+            left: 5vw;
+
+
+            >div:nth-child(1){
+                
+                position: sticky;
+                left: 0;
+
+            }
+
+            >div{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap:1.12vw ;
+            }
+            
+        }
+
     }
 
     .dailyforecast{
+        width: 92.23vw;
+        height: 53.15vw ;
+        background-color: rebeccapurple;
 
         
     }
