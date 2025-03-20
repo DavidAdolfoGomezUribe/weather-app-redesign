@@ -200,7 +200,7 @@ body{
 
 
 .maincontainer{
-    background-color: rgba(250, 238, 174, 0.527);
+    /* background-color: rgba(250, 238, 174, 0.527); */
     position:relative;
     top: 105.82vw;
     left: 3.88vw;
@@ -312,7 +312,7 @@ body{
 
         >div:nth-child(2){
             position: absolute;
-            
+            overflow-y: hidden;
             display: flex;
             flex-direction: row;
             gap: 8vw;
@@ -322,21 +322,36 @@ body{
             overflow-x: scroll;
             bottom: 3.30vw;
             left: 5vw;
+            z-index: 0;
 
 
             >div:nth-child(1){
                 
                 position: sticky;
                 left: 0;
+                
 
             }
 
             >div{
+                
+                height: 19.41vw;
+                width: 7.28vw;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap:1.12vw ;
+                text-align: center;
+                gap:1vw ;
+                p{
+
+                    white-space: nowrap;
+                }
+
+                img{
+                    width: 7.28vw;
+                    height: auto;
+                }
             }
             
         }

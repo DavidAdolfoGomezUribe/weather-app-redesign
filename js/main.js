@@ -298,6 +298,8 @@ document.addEventListener("DOMContentLoaded",async function() {
                 </p>
             </div> `
 
+            //console.log(data.current.temp_c)
+
             hourlyforecastcontainer.innerHTML=`
            <div>
                 <img src="" alt="">
@@ -310,129 +312,129 @@ document.addEventListener("DOMContentLoaded",async function() {
                 <div>   <!-- position sitiky + curret forecast -->
                     <p>Now</p>
                     <img src="${data.current.condition.icon}">
-                    <p>${data.current.condition.text}</p>
+                    <p>${data.current.temp_c}</p>
                 </div>
-
+                
                 <div>
                     <p>12am</p>
-                    <img src="" alt="">
-                    <p>1</p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[0].condition.icon} " alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[0].temp_c}°</p> 
                 </div>
                 <div>
                     <p>1am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[1].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[1].temp_c}°</p>
                 </div>
                 <div>
                     <p>2am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[2].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[2].temp_c}°</p>
                 </div>
                 <div>
                     <p>3am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[3].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[3].temp_c}°</p>
                 </div>
                 <div>
                     <p>4am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[4].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[4].temp_c}°</p>
                 </div>
                 <div>
                     <p>5am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[5].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[5].temp_c}°</p>
                 </div>
                 <div>
                     <p>6am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[6].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[6].temp_c}°</p>
                 </div>
                 <div>
                     <p>7am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[7].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[7].temp_c}°</p>
                 </div>
                 <div>
                     <p>8am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[8].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[8].temp_c}°</p>
                 </div>
                 <div>
                     <p>9am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[9].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[9].temp_c}°</p>
                 </div>
                 <div>
                     <p>10am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[10].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[10].temp_c}°</p>
                 </div>
                 <div>
                     <p>11am</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[11].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[11].temp_c}°</p>
                 </div>
                 
                 <div>
                     <p>12pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[12].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[12].temp_c}°</p>
                 </div>
                 <div>
                     <p>1pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[13].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[13].temp_c}°</p>
                 </div>
                 <div>
                     <p>2pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[14].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[14].temp_c}°</p>
                 </div>
                 <div>
                     <p>3pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[15].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[15].temp_c}°</p>
                 </div>
                 <div>
                     <p>4pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[16].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[16].temp_c}°</p>
                 </div>
                 <div>
                     <p>5pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[17].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[17].temp_c}°</p>
                 </div>
                 <div>
                     <p>6pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[18].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[18].temp_c}°</p>
                 </div>
                 <div>
                     <p>7pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[19].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[19].temp_c}°</p>
                 </div>
                 <div>
                     <p>8pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[20].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[20].temp_c}°</p>
                 </div>
                 <div>
                     <p>9pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[21].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[21].temp_c}°</p>
                 </div>
                 <div>
                     <p>10pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[22].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[22].temp_c}°</p>
                 </div>
                 <div>
                     <p>11pm</p>
-                    <img src="" alt="">
-                    <p></p>
+                    <img src="${dataForecast.forecast.forecastday[0].hour[23].condition.icon}" alt="">
+                    <p>${dataForecast.forecast.forecastday[0].hour[23].temp_c}°</p>
                 </div>
 
 
