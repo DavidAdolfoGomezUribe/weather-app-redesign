@@ -25,7 +25,10 @@ document.addEventListener("DOMContentLoaded",async function() {
         const pressurecontainer = document.querySelector(".pressurecontainer")
         const uvcontainer = document.querySelector(".uvcontainer")
 
-
+        const hourlyforecastcontainer = document.querySelector(".hourlyforecastcontainer")
+        
+        
+        //Inicio de la logica del codigo
         headercontainer.style.backgroundColor = "rgba(226, 211, 250, 1)";
         
         //diablo que dificil me la pusite , diablo.
@@ -91,17 +94,17 @@ document.addEventListener("DOMContentLoaded",async function() {
                 daynightcontainer.style.top = "23vw"
                 daynightcontainer.style.color = "transparent"
                 
-
+                
                 //estilos del selectioncontaienr 
                 
                 selectioncontaienr.style.top = "29.36vw";
-
+                
                 //estilos para el main
                 maincontainer.style.top = "46.60vw";
                 
                 
-
-
+                
+                
                 
             } else{ //Pa poder cambiar las propiedades cuando se sube
                 
@@ -116,29 +119,29 @@ document.addEventListener("DOMContentLoaded",async function() {
                 headercontainer.style.borderBottomLeftRadius = "8vw";
                 headercontainer.style.borderBottomRightRadius = "8vw";
                 
-
+                
                 regioncontainer_input.style.color = "white"; 
-                                
+                
                 tempcontainer.style.fontSize ="27.18vw"
                 tempcontainer.style.top = "33.73vw";
-
+                
                 feelslikecontainer.style.top = "49.75vw"
                 feelslikecontainer.style.left = "24.27vw"
                 feelslikecontainer.style.fontSize ="4.36vw";
-
+                
                 imgweathercontainer.style.top = "17.96vw";
                 imgweathercontainer.style.left = "68.20vw";
                 imgweathercontainer.style.width = "25.97vw";
                 imgweathercontainer.style.height = "36.16vw";
                 imgweathercontainer.style.color = "white"
                 
-
-                    imgweathercontainer_img.style.width = "25.97vw";
-                    imgweathercontainer_img.style.height = "25.97vw";
-                    
-                    
-                    
-
+                
+                imgweathercontainer_img.style.width = "25.97vw";
+                imgweathercontainer_img.style.height = "25.97vw";
+                
+                
+                
+                
                 datecontainer.style.display = "block"
                 datecontainer.style.top = "76.69vw"
                 datecontainer.style.color = "white"
@@ -151,87 +154,90 @@ document.addEventListener("DOMContentLoaded",async function() {
                 selectioncontaienr.style.top = "91.74vw"
                 
                 //main
-
+                
                 maincontainer.style.top = "105.82vw"
                 
             }
             
             lastScrollTop = scrollTop;
-
-
+            
+            
         });
-
-
+        
+        
         //variables de la api
         const apiKey = "key=3147a7f586c64f2abba154614251003"
         const baseUrlRequest = "https://api.weatherapi.com/v1"
         const currentJson = "current.json?"
         const forecastJson = "forecast.json?"
         const currentDay = "days=1"
-
-
+        
+        
         async function wheatherApi() {
             
             
-        // geolocalizacion
-          async function getLocation() {
-            return new Promise(function (success, reject) {
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    success({
-                        lat: position.coords.latitude,
-                        lon: position.coords.longitude
-                    });
-                }
-                ,                
-                function (error) {
-                    reject(error);
-                }
-                );
-            });
-        }
-
-        //verificacion de lat y long en consola
-        // let coords = await getLocation()   
-        // console.log(coords) //esto devuelve un arreglo          
-        // let latidude  =  coords.lat
-        // let longitude = coords.lon
-        // console.log(latidude)
-        // console.log(longitude)
-
-
-    // Obtener y mostrar el clima
-        async function fetchWeatherData(query) {
-        try {
-
-            // Petición para datos actuales del header usando current
-            let response = await fetch(`${baseUrlRequest}/${currentJson}${apiKey}&q=${query}`);
-            let data = await response.json();
-
+            // geolocalizacion
+            async function getLocation() {
+                return new Promise(function (success, reject) {
+                    navigator.geolocation.getCurrentPosition(
+                        function (position) {
+                            success({
+                                lat: position.coords.latitude,
+                                lon: position.coords.longitude
+                            });
+                        }
+                        ,                
+                        function (error) {
+                            reject(error);
+                        }
+                    );
+                });
+            }
             
-
-            tempcontainer.innerHTML = `<p>${data.current.temp_c}<span>°</span></p>`;
+            //verificacion de lat y long en consola
+            // let coords = await getLocation()   
+            // console.log(coords) //esto devuelve un arreglo          
+            // let latidude  =  coords.lat
+            // let longitude = coords.lon
+            // console.log(latidude)
+            // console.log(longitude)
             
-            feelslikecontainer.innerHTML = `<p>Feels like ${data.current.feelslike_c}<span>°</span></p>`;
             
-            imgweathercontainer.innerHTML = `<img src="${data.current.condition.icon}">
-                                                <p>${data.current.condition.text}</p>`;
-            
-
-            function formatLocalTime(localtime) {
-                const date = new Date(localtime.replace(" ", "T"));
-                const options = { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false };
+            // Obtener y mostrar el clima
+            async function fetchWeatherData(query) {
+                try {
+                    
+                    // Petición para datos actuales del header usando current
+                    let response = await fetch(`${baseUrlRequest}/${currentJson}${apiKey}&q=${query}`);
+                    let data = await response.json();
+                    
+                    // Petición para obtener temperaturas del día y la noche usando forecast //pronostico de ahora en 24 horas
+                    let responseForecast = await fetch(`${baseUrlRequest}/${forecastJson}${apiKey}&q=${query}&${currentDay}`);
+                    let dataForecast = await responseForecast.json();
+                    
+                    
+                    tempcontainer.innerHTML = `<p>${data.current.temp_c}<span>°</span></p>`;
+                    
+                    feelslikecontainer.innerHTML = `<p>Feels like ${data.current.feelslike_c}<span>°</span></p>`;
+                    
+                    imgweathercontainer.innerHTML = `<img src="${data.current.condition.icon}">
+                    <p>${data.current.condition.text}</p>`;
+                    
+                    
+                    function formatLocalTime(localtime) {
+                        const date = new Date(localtime.replace(" ", "T"));
+                        const options = { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false };
                 return date.toLocaleString("en-US", options).replace("at", ",");
             }
-
+            
             datecontainer.innerHTML = `${formatLocalTime(data.location.localtime)}`;
-
+            
             //peticiones para el main
-
+            
             windcontainer.innerHTML =`
             <div>
-
-                <img src="storage/img/air.png" alt="">
+            
+            <img src="storage/img/air.png" alt="">
             
                 <div>
                     <p>Wind speed</p>
@@ -292,6 +298,151 @@ document.addEventListener("DOMContentLoaded",async function() {
                 </p>
             </div> `
 
+            hourlyforecastcontainer.innerHTML=`
+           <div>
+                <img src="" alt="">
+                <p>Hourly forecast</p>
+            </div>      
+
+            <!-- --- --- --- -- --- --- --- --- --- --- -->
+            
+            <div>
+                <div>   <!-- position sitiky + curret forecast -->
+                    <p>Now</p>
+                    <img src="${data.current.condition.icon}">
+                    <p>${data.current.condition.text}</p>
+                </div>
+
+                <div>
+                    <p>12am</p>
+                    <img src="" alt="">
+                    <p>1</p>
+                </div>
+                <div>
+                    <p>1am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>2am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>3am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>4am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>5am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>6am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>7am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>8am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>9am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>10am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>11am</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                
+                <div>
+                    <p>12pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>1pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>2pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>3pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>4pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>5pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>6pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>7pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>8pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>9pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>10pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+                <div>
+                    <p>11pm</p>
+                    <img src="" alt="">
+                    <p></p>
+                </div>
+
+
+            </div>
+
+
+          
+`
+
+            // hourlyforecast
            
 
 
@@ -299,13 +450,10 @@ document.addEventListener("DOMContentLoaded",async function() {
 
 
 
-            // Petición para obtener temperaturas del día y la noche usando forecast //pronostico de ahora en 24 horas
-            response = await fetch(`${baseUrlRequest}/${forecastJson}${apiKey}&q=${query}&${currentDay}`);
-            data = await response.json();
 
             daynightcontainer.innerHTML =
-                `<p>Day ${data.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
-                 <p>Night ${data.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`;
+                `<p>Day ${dataForecast.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
+                 <p>Night ${dataForecast.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`;
 
 
             //peticiin para el main     
@@ -317,7 +465,7 @@ document.addEventListener("DOMContentLoaded",async function() {
                      
                      <div>
                          <p>Rain chance</p>
-                         <p>${data.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
+                         <p>${dataForecast.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
      
                      </div>
                  
@@ -333,7 +481,9 @@ document.addEventListener("DOMContentLoaded",async function() {
             
              </div> `
 
-
+ 
+            
+            
 
         } catch (error) {
             console.error("Error obteniendo datos del clima:", error);

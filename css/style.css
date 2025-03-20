@@ -290,7 +290,7 @@ body{
         }
     }
 
-    .hourlyforecast{
+    .hourlyforecastcontainer{
         color: black;
         position: relative;
         width: 92.23vw;
