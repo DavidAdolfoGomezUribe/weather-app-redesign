@@ -11,7 +11,7 @@ const data = {
     datasets: [{
         data: [-7, -1, -2, -1, 3, -1, -2], // Datos de ejemplo
         fill: 'start',  // Rellena siempre hacia abajo de la línea
-        borderColor: '#000000', // Color de la línea
+        borderColor: '#fff', // Color de la línea
         backgroundColor: gradientFill,  // Degradado aplicado al fondo
         pointBackgroundColor: '#21005D', // Color del fondo del punto
         pointBorderColor: '#fff', // Color del borde del punto

@@ -2,7 +2,6 @@ console.log("ok");
 
 document.addEventListener("DOMContentLoaded",async function() {
     try {
-
         //etiquetas html del header
         const headercontainer = document.querySelector(".headercontainer");
         const regioncontainer_input = document.querySelector(".regioncontainer input")
@@ -140,8 +139,6 @@ document.addEventListener("DOMContentLoaded",async function() {
                 imgweathercontainer_img.style.height = "25.97vw";
                 
                 
-                
-                
                 datecontainer.style.display = "block"
                 datecontainer.style.top = "76.69vw"
                 datecontainer.style.color = "white"
@@ -163,7 +160,8 @@ document.addEventListener("DOMContentLoaded",async function() {
             
             
         });
-        
+        //final del funcion scroll 
+//-----------------------------------------------------------//
         
         //variables de la api
         const apiKey = "key=3147a7f586c64f2abba154614251003"
@@ -171,12 +169,11 @@ document.addEventListener("DOMContentLoaded",async function() {
         const currentJson = "current.json?"
         const forecastJson = "forecast.json?"
         const currentDay = "days=1"
+        const week = "days=7"
         
         
-        async function wheatherApi() {
-            
-            
-            // geolocalizacion
+    async function wheatherApi() {
+        // geolocalizacion
             async function getLocation() {
                 return new Promise(function (success, reject) {
                     navigator.geolocation.getCurrentPosition(
@@ -193,14 +190,16 @@ document.addEventListener("DOMContentLoaded",async function() {
                     );
                 });
             }
+            //final de la funcion getLocation()
+//---------------------------------------------------------//            
             
             //verificacion de lat y long en consola
-            // let coords = await getLocation()   
-            // console.log(coords) //esto devuelve un arreglo          
-            // let latidude  =  coords.lat
-            // let longitude = coords.lon
-            // console.log(latidude)
-            // console.log(longitude)
+                // let coords = await getLocation()   
+                // console.log(coords) //esto devuelve un arreglo          
+                // let latidude  =  coords.lat
+                // let longitude = coords.lon
+                // console.log(latidude)
+                // console.log(longitude)
             
             
             // Obtener y mostrar el clima
@@ -214,7 +213,12 @@ document.addEventListener("DOMContentLoaded",async function() {
                     // Petición para obtener temperaturas del día y la noche usando forecast //pronostico de ahora en 24 horas
                     let responseForecast = await fetch(`${baseUrlRequest}/${forecastJson}${apiKey}&q=${query}&${currentDay}`);
                     let dataForecast = await responseForecast.json();
-                    
+
+                    //peticion de datos para la grafica //sacar el temp_c avg de los proximos 7 dias
+                    let responseWeekForecast = await fetch(`${baseUrlRequest}/${forecastJson}${apiKey}&q=${query}&${week}`);
+                    let dataWeekForecast = await responseWeekForecast.json();
+
+
                     
                     tempcontainer.innerHTML = `<p>${data.current.temp_c}<span>°</span></p>`;
                     
@@ -227,270 +231,404 @@ document.addEventListener("DOMContentLoaded",async function() {
                     function formatLocalTime(localtime) {
                         const date = new Date(localtime.replace(" ", "T"));
                         const options = { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false };
-                return date.toLocaleString("en-US", options).replace("at", ",");
+                    return date.toLocaleString("en-US", options).replace("at", ",");
+                    }
+            
+                    datecontainer.innerHTML = `${formatLocalTime(data.location.localtime)}`;
+                    
+                    //peticiones para el main
+                    
+                    windcontainer.innerHTML =`
+                    <div>
+                    
+                    <img src="storage/img/air.png" alt="">
+                    
+                        <div>
+                            <p>Wind speed</p>
+                            <p> ${data.current.wind_kph}km/h</p>
+
+                        </div>
+                
+                    </div>
+
+                    <div>
+                        <!-- velocidad con respecto a la hora anterior -->
+                        <img src="" alt="">
+                        <p>
+                            2 <span>km/h</span>
+                        </p>
+                    </div> `
+
+                    pressurecontainer.innerHTML= `    
+                    <div>
+
+                    <img src="storage/img/pressre.svg" alt="">
+                    
+                    <div>
+                        <p>Pressure</p>
+                        <p>${data.current.pressure_mb}hpa</p>
+
+                    </div>
+                
+                    </div>
+
+                    <div>
+                        <!-- velocidad con respecto a la hora anterior -->
+                        <img src="" alt="">
+                        <p>
+                            0 <span>hpa</span>
+                        </p>
+                    </div>`
+
+                    uvcontainer.innerHTML=`
+                    <div>
+
+                        <img src="storage/img/uv.svg" alt="">
+                        
+                        <div>
+                            <p>UV index</p>
+                            <p>${data.current.uv}</p>
+
+                        </div>
+                    
+                    </div>
+
+                    <div>
+                        <!-- velocidad con respecto a la hora anterior -->
+                        <img src="" alt="">
+                        <p>
+                            0 
+                        </p>
+                    </div> `
+
+                    //console.log(data.current.temp_c)
+
+                    hourlyforecastcontainer.innerHTML=`
+                <div>
+                        <img src="" alt="">
+                        <p>Hourly forecast</p>
+                    </div>      
+
+                    <!-- --- --- --- -- --- --- --- --- --- --- -->
+                    
+                    <div>
+                        <div>   <!-- position sitiky + curret forecast -->
+                            <p>Now</p>
+                            <img src="${data.current.condition.icon}">
+                            <p>${data.current.temp_c}</p>
+                        </div>
+                        
+                        <div>
+                            <p>12am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[0].condition.icon} " alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[0].temp_c}°</p> 
+                        </div>
+                        <div>
+                            <p>1am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[1].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[1].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>2am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[2].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[2].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>3am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[3].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[3].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>4am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[4].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[4].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>5am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[5].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[5].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>6am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[6].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[6].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>7am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[7].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[7].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>8am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[8].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[8].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>9am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[9].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[9].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>10am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[10].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[10].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>11am</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[11].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[11].temp_c}°</p>
+                        </div>
+                        
+                        <div>
+                            <p>12pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[12].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[12].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>1pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[13].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[13].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>2pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[14].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[14].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>3pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[15].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[15].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>4pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[16].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[16].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>5pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[17].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[17].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>6pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[18].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[18].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>7pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[19].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[19].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>8pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[20].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[20].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>9pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[21].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[21].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>10pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[22].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[22].temp_c}°</p>
+                        </div>
+                        <div>
+                            <p>11pm</p>
+                            <img src="${dataForecast.forecast.forecastday[0].hour[23].condition.icon}" alt="">
+                            <p>${dataForecast.forecast.forecastday[0].hour[23].temp_c}°</p>
+                        </div>
+
+
+                    </div>
+
+
+                
+                    `
+
+                    // hourlyforecast
+
+                    daynightcontainer.innerHTML =
+                        `<p>Day ${dataForecast.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
+                        <p>Night ${dataForecast.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`;
+
+
+                    //peticiones para el main     
+                    raincontainer.innerHTML =`
+                
+                        <div>
+        
+                            <img src="storage/img/rainy.png" alt="">
+                            
+                            <div>
+                                <p>Rain chance</p>
+                                <p>${dataForecast.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
+            
+                            </div>
+                        
+                        </div>
+        
+                        <div>
+                            <!-- velocidad con respecto a la hora anterior -->
+                            <img src="" alt="">
+                            <p>
+                                0 <span>%</span>
+                            </p>
+                        </div>
+                    
+                    </div> `
+
+                    //grafica dailyforecast
+
+                    function loadChartJS(callback) {
+                        const script = document.createElement('script');
+                        script.src = "https://cdn.jsdelivr.net/npm/chart.js";
+                        script.type= "module"
+                        script.defer = true
+                        script.onload = () => callback();
+                        document.head.appendChild(script);
+                    }
+                    
+
+                    loadChartJS(() => {
+
+                        let dayOne = `${dataWeekForecast.forecast.forecastday[0].day.avgtemp_c}`
+                        let dayTwo = `${dataWeekForecast.forecast.forecastday[1].day.avgtemp_c}`
+                        let dayThree = `${dataWeekForecast.forecast.forecastday[2].day.avgtemp_c}`
+                        let dayFour = `${dataWeekForecast.forecast.forecastday[3].day.avgtemp_c}`
+                        let dayFive = `${dataWeekForecast.forecast.forecastday[4].day.avgtemp_c}`
+                        let daySix = `${dataWeekForecast.forecast.forecastday[5].day.avgtemp_c}`
+                        let daySeven = `${dataWeekForecast.forecast.forecastday[6].day.avgtemp_c}`
+                    
+                        let promSeven = ( Number(dayOne) + Number(dayTwo) + Number(dayThree) + Number(dayFour) +  Number(dayFive) + Number(daySix) + Number(daySeven) ) / 7;
+                        // console.log(promSeven)
+
+                        let dayDateOne =  `${dataWeekForecast.forecast.forecastday[0].date}`
+                        let dayDateTwo =  `${dataWeekForecast.forecast.forecastday[1].date}`
+                        let dayDateThree =  `${dataWeekForecast.forecast.forecastday[2].date}`
+                        let dayDateFour =  `${dataWeekForecast.forecast.forecastday[3].date}`
+                        let dayDateFive =  `${dataWeekForecast.forecast.forecastday[4].date}`
+                        let dayDateSix =  `${dataWeekForecast.forecast.forecastday[5].date}`
+                        let dayDateSeven =  `${dataWeekForecast.forecast.forecastday[6].date}`
+
+
+
+                        function weekDayFunction(weekDate) {
+                            // Crear un objeto Date a partir de la cadena de fecha
+                            const date = new Date(weekDate);
+                            
+                            // Verificar si la fecha es válida
+                            if (isNaN(date)) {
+                              throw new Error('Fecha inválida');
+                            }
+                          
+                            // Arreglo con los días de la semana en inglés, comenzando por 'Sun'
+                            const diasSemana = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat','Sun'];
+                          
+                            // Obtener el índice del día de la semana (0 para domingo, 6 para sábado)
+                            const indiceDia = date.getDay();
+                          
+                            // Devolver la abreviatura correspondiente
+                            return diasSemana[indiceDia];
+                          }
+
+                        //console.log(weekDayFunction(dayDateOne))
+
+
+
+
+                        // Obtén el contexto del canvas
+                        const ctx = document.getElementById('myChart').getContext('2d');
+                        
+                        
+                        // Crear el degradado para el fondo
+                        const gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
+                        gradientFill.addColorStop(0, 'rgba(43, 0, 165, 0.25)'); // Color más claro arriba
+                        gradientFill.addColorStop(1, 'rgba(43, 0, 165, 0)');   // Transparente abajo
+                        
+
+
+                        // Define los datos y la configuración del gráfico
+                        const data = {
+                            //estos son los labels del eje x
+                            labels:                             [
+                            `${weekDayFunction(dayDateOne)}`,
+                            `${weekDayFunction(dayDateTwo)}`,
+                            `${weekDayFunction(dayDateThree)}`,
+                            `${weekDayFunction(dayDateFour)}`,
+                            `${weekDayFunction(dayDateFive)}`,
+                            `${weekDayFunction(dayDateSix)}`,
+                            `${weekDayFunction(dayDateSeven)}`],
+
+                        datasets: [{
+                            // label: "example", desactivado de momento
+                            // Puedes incluir valores null para que Chart.js salte esos puntos (si quieres unir los huecos, activa spanGaps)
+                            // Puntos que sacare de la API
+                            // la cantidad de labels deebe ser igual que la cantidad de data
+                            data: [dayOne, dayTwo, dayThree, dayFour, dayFive, daySix, daySeven],
+                            
+                            
+                            fill: 'start',  // Rellena siempre hacia abajo de la línea
+                            borderColor: '#000', // Color de la línea
+                            backgroundColor: gradientFill,  // Degradado aplicado al fondo
+                            pointBackgroundColor: '#21005D', // Color del fondo del punto
+                            pointBorderColor: '#fff', // Color del borde del punto
+                            pointBorderWidth: [1,1,1,1,1,1,1], // Ancho del borde del punto
+                            pointRadius: [5, 5, 5, 5, 5, 5, 5], // Tamaño de los puntos
+                            pointHoverRadius: [9, 9, 9, 9, 9, 9, 9], // Tamaño del punto al pasar el ratón
+                            pointStyle: 'circle', // Estilo del punto
+                            // Ajusta la tensión para definir el nivel de interpolación (curvatura)
+                            tension: 0.5,
+                            
+                        }]
+                        };
+
+                        const config = {
+                            type: 'line',
+                            data: data,
+                            options: {
+
+                                plugins: {
+                                    legend: {
+                                        display: false 
+                                    }
+                                },
+
+                                scales: {
+                                    x:{
+                                        grid:{
+                                            display: false
+                                        }
+                                    },
+
+                                    y: {
+                                        min: (promSeven - 4) , 
+                                        max: (promSeven + 4),
+                                        ticks:{
+                                            stepSize: 2,
+                                            callback: function(value){
+                                                return (Math.round(value*10)/10) + "°";
+                                            }
+
+                                        }
+
+                                    
+                                    }
+                                }
+                            }
+                        };
+
+                        // Crea el gráfico
+                        const myChart = new Chart(ctx, config);
+
+                    });
+
+                    } catch (error) {
+
+                    console.error("Error obteniendo datos del clima:", error);
+                }
             }
-            
-            datecontainer.innerHTML = `${formatLocalTime(data.location.localtime)}`;
-            
-            //peticiones para el main
-            
-            windcontainer.innerHTML =`
-            <div>
-            
-            <img src="storage/img/air.png" alt="">
-            
-                <div>
-                    <p>Wind speed</p>
-                    <p> ${data.current.wind_kph}km/h</p>
-
-                </div>
-        
-            </div>
-
-            <div>
-                <!-- velocidad con respecto a la hora anterior -->
-                <img src="" alt="">
-                <p>
-                    2 <span>km/h</span>
-                </p>
-            </div> `
-
-            pressurecontainer.innerHTML= `    
-            <div>
-
-            <img src="storage/img/pressre.svg" alt="">
-            
-            <div>
-                <p>Pressure</p>
-                <p>${data.current.pressure_mb}hpa</p>
-
-            </div>
-        
-            </div>
-
-            <div>
-                <!-- velocidad con respecto a la hora anterior -->
-                <img src="" alt="">
-                <p>
-                    0 <span>hpa</span>
-                </p>
-            </div>`
-
-
-            uvcontainer.innerHTML=`
-            <div>
-
-                <img src="storage/img/uv.svg" alt="">
-                
-                <div>
-                    <p>UV index</p>
-                    <p>${data.current.uv}</p>
-
-                </div>
-            
-            </div>
-
-            <div>
-                <!-- velocidad con respecto a la hora anterior -->
-                <img src="" alt="">
-                <p>
-                    0 
-                </p>
-            </div> `
-
-            //console.log(data.current.temp_c)
-
-            hourlyforecastcontainer.innerHTML=`
-           <div>
-                <img src="" alt="">
-                <p>Hourly forecast</p>
-            </div>      
-
-            <!-- --- --- --- -- --- --- --- --- --- --- -->
-            
-            <div>
-                <div>   <!-- position sitiky + curret forecast -->
-                    <p>Now</p>
-                    <img src="${data.current.condition.icon}">
-                    <p>${data.current.temp_c}</p>
-                </div>
-                
-                <div>
-                    <p>12am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[0].condition.icon} " alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[0].temp_c}°</p> 
-                </div>
-                <div>
-                    <p>1am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[1].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[1].temp_c}°</p>
-                </div>
-                <div>
-                    <p>2am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[2].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[2].temp_c}°</p>
-                </div>
-                <div>
-                    <p>3am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[3].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[3].temp_c}°</p>
-                </div>
-                <div>
-                    <p>4am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[4].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[4].temp_c}°</p>
-                </div>
-                <div>
-                    <p>5am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[5].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[5].temp_c}°</p>
-                </div>
-                <div>
-                    <p>6am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[6].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[6].temp_c}°</p>
-                </div>
-                <div>
-                    <p>7am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[7].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[7].temp_c}°</p>
-                </div>
-                <div>
-                    <p>8am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[8].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[8].temp_c}°</p>
-                </div>
-                <div>
-                    <p>9am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[9].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[9].temp_c}°</p>
-                </div>
-                <div>
-                    <p>10am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[10].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[10].temp_c}°</p>
-                </div>
-                <div>
-                    <p>11am</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[11].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[11].temp_c}°</p>
-                </div>
-                
-                <div>
-                    <p>12pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[12].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[12].temp_c}°</p>
-                </div>
-                <div>
-                    <p>1pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[13].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[13].temp_c}°</p>
-                </div>
-                <div>
-                    <p>2pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[14].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[14].temp_c}°</p>
-                </div>
-                <div>
-                    <p>3pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[15].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[15].temp_c}°</p>
-                </div>
-                <div>
-                    <p>4pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[16].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[16].temp_c}°</p>
-                </div>
-                <div>
-                    <p>5pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[17].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[17].temp_c}°</p>
-                </div>
-                <div>
-                    <p>6pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[18].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[18].temp_c}°</p>
-                </div>
-                <div>
-                    <p>7pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[19].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[19].temp_c}°</p>
-                </div>
-                <div>
-                    <p>8pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[20].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[20].temp_c}°</p>
-                </div>
-                <div>
-                    <p>9pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[21].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[21].temp_c}°</p>
-                </div>
-                <div>
-                    <p>10pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[22].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[22].temp_c}°</p>
-                </div>
-                <div>
-                    <p>11pm</p>
-                    <img src="${dataForecast.forecast.forecastday[0].hour[23].condition.icon}" alt="">
-                    <p>${dataForecast.forecast.forecastday[0].hour[23].temp_c}°</p>
-                </div>
-
-
-            </div>
-
-
-          
-`
-
-            // hourlyforecast
-           
-
-
-
-
-
-
-
-            daynightcontainer.innerHTML =
-                `<p>Day ${dataForecast.forecast.forecastday[0].day.maxtemp_c} <span>°</span></p>
-                 <p>Night ${dataForecast.forecast.forecastday[0].day.mintemp_c}<span>°</span></p>`;
-
-
-            //peticiin para el main     
-            raincontainer.innerHTML =`
-           
-                 <div>
- 
-                     <img src="storage/img/rainy.png" alt="">
-                     
-                     <div>
-                         <p>Rain chance</p>
-                         <p>${dataForecast.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
-     
-                     </div>
-                 
-                 </div>
- 
-                 <div>
-                     <!-- velocidad con respecto a la hora anterior -->
-                     <img src="" alt="">
-                     <p>
-                         0 <span>%</span>
-                     </p>
-                 </div>
-            
-             </div> `
-
- 
-            
-            
-
-        } catch (error) {
-            console.error("Error obteniendo datos del clima:", error);
-        }
-    }
 
     // Mostrar el clima inicial con geolocalización
     
@@ -529,7 +667,7 @@ document.addEventListener("DOMContentLoaded",async function() {
     // Escuchar cambios en el input de búsqueda
     regioncontainer_input.addEventListener("input", async function (e) {
         let city = e.target.value;
-        if (city.length > 2) { // Evitar llamadas innecesarias
+        if (city.length > 3) { // Evitar llamadas innecesarias
             await fetchWeatherData(city);
         }
     
@@ -558,17 +696,10 @@ document.addEventListener("DOMContentLoaded",async function() {
         }) }   
     }
 
-        wheatherApi();
+    wheatherApi();
 
-
-
-        
+    
     } catch (error) {
         
     }
-
-
-
-
-
 });

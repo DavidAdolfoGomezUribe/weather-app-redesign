@@ -26,13 +26,17 @@ transition: none;
 }
 }
 
-
+html{
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    scrollbar-color: rgba(226, 211, 250, 1) rgba(246, 237, 255, 1);
+    
+}
 
 /* ancho 412px */
 /*  4.12 */
 body{
-    overflow-y: scroll;
-    scroll-behavior: smooth;
     background-color: light-dark(rgba(246, 237, 255, 1),#252525);
     flex-shrink: 0;
 }
@@ -323,8 +327,12 @@ body{
             bottom: 3.30vw;
             left: 5vw;
             z-index: 0;
+            padding-bottom: 1vw;
+            scroll-behavior: smooth;
+            scrollbar-color: rgba(226, 211, 250, 1) rgba(246, 237, 255, 1);
+            scrollbar-width: thin;
 
-
+         
             >div:nth-child(1){
                 
                 position: sticky;
@@ -361,8 +369,34 @@ body{
     .dailyforecast{
         width: 92.23vw;
         height: 53.15vw ;
-        background-color: rebeccapurple;
+        background-color: rgba(208, 188, 255, 0.30);
+        border-radius: 4.36vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        div{
 
+            align-items: center;
+            gap:1.94vw ;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-left: 2.66vw;
+            margin-top: 3.15vw;
+            img{
+                width: 6.8vw;
+                height: 6.8vw;
+            }
+        }
+
+        canvas{
+            scale: 0.9;
+            margin-left: 2vw;
+            margin-right: 2vw;
+        }
+        
         
     }
 
