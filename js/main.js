@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded",async function() {
 //-----------------------------------------------------------//
         
         //variables de la api
-        const apiKey = "key=3147a7f586c64f2abba154614251003"
+        const apiKey = "key=fba7cb4439c44944af2163150252403"
         const baseUrlRequest = "https://api.weatherapi.com/v1"
         const currentJson = "current.json?"
         const forecastJson = "forecast.json?"
@@ -490,7 +490,7 @@ document.addEventListener("DOMContentLoaded",async function() {
                         document.head.appendChild(script);
                     }
                     
-
+                    
                     loadChartJS(() => {
 
                         let dayOne = `${dataWeekForecast.forecast.forecastday[0].day.avgtemp_c}`
@@ -612,8 +612,6 @@ document.addEventListener("DOMContentLoaded",async function() {
                                             }
 
                                         }
-
-                                    
                                     }
                                 }
                             }
@@ -673,6 +671,11 @@ document.addEventListener("DOMContentLoaded",async function() {
     
     });
 
+    
+    }
+
+    wheatherApi();
+
     //Aqui empieza lo dificil
     const buttons = document.querySelectorAll(".selectioncontaienr button");
     for (var i = 0; i < buttons.length; i++) {
@@ -680,7 +683,7 @@ document.addEventListener("DOMContentLoaded",async function() {
             var buttonText = this.textContent.trim();
             if (buttonText === "Today") {
                 // Lógica para "Today"
-                maincontainer.style.backgroundColor = "blue"
+                maincontainer.style.backgroundColor = "transparent"
                 console.log("Today clicked");
                 // Ejemplo: await fetchWeatherData(query);
             } else if (buttonText === "Tomorrow") {
@@ -691,12 +694,10 @@ document.addEventListener("DOMContentLoaded",async function() {
             } else if (buttonText === "10 days") {
                 // Lógica para "10 days"
                 console.log("10 days clicked");
+                maincontainer.style.backgroundColor = "green"
                 // TODO: Implementa la lógica para mostrar el pronóstico de 10 días
             }
         }) }   
-    }
-
-    wheatherApi();
 
     
     } catch (error) {

@@ -209,7 +209,7 @@ body{
     top: 105.82vw;
     left: 3.88vw;
     width: 92.23vw;
-    height: 1000vw ;
+    height: 300vw ;
     flex-shrink: 0;
     transition: all var(--time) ease-in-out;
     display: flex; flex-direction: column;
@@ -400,4 +400,29 @@ body{
         
     }
 
+    .chanceofraincontainer{
+        width: 100vw;
+        height: 50vw;
+        background-color: rgba(208, 188, 255, 0.3);
+
+    }
+
 }
+
+.progress-bar {
+    width: 55.58vw ;               /* Ajusta el ancho total */
+    height: 5.82vw;              /* Ajusta la altura */
+    background-color: rgba(250, 237, 255, 1); /* Color de fondo para la parte vacía */
+    border-radius: 5px;     /* Esquinas redondeadas */
+    overflow: hidden;          /* Oculta el exceso para mantener el relleno redondeado */
+    
+  }
+
+  /* Parte rellena de la barra */
+  .progress-bar__fill {
+    height: 5.82vw;
+    width: 50vw;                 /* El ancho se controlará dinámicamente */
+    background-color: #ff1c1c; /* Color del relleno (morado) */
+    border-radius: 5px;    /* Hereda las esquinas redondeadas del contenedor */
+    transition: width 0.4s ease; /* Animación suave al cambiar el porcentaje */
+  }
